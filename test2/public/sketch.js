@@ -1,7 +1,7 @@
 var socket;
 
 function setup(){
-	createCanvas(640, 480);
+	createCanvas(800, 600);
 	background(51);
 
 	socket = io.connect('http://localhost:3000')
@@ -18,7 +18,7 @@ function mouseDragged(){
 
 	noStroke();
 	fill(255);
-	ellipse(mouseX, mouseY, 40, 40);
+	ellipse(mouseX, mouseY, 25, 25);
 }
 
 function draw(){
@@ -29,7 +29,7 @@ function draw(){
 
 		noStroke();
 		fill(255, 0, 100);
-		ellipse(data.x, data.y, 40, 40);
+		ellipse(data.x, data.y, 25, 25);
 
 	}
 }
