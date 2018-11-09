@@ -28,6 +28,12 @@ function newConnection(socket){
 		socket.broadcast.emit('reqPos', data);
 	};
 
+	socket.on('disconnect', function(){
+		socket.broadcast.emit('dc');
+		console.log('player discconect')
+	});
+
+
 
 }
 

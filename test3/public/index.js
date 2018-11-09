@@ -6,11 +6,12 @@ context.scale(8,8);
 var socket;
 socket = io.connect('http://localhost:3000');
 
-var localPlayer = new Character();
+var localPlayer = new Character(4);
 var players = [];
 players.push(localPlayer);
 socket.emit('reqPos', localPlayer);
 socket.emit('charData', localPlayer);
+
 
 function setBackground(){
 	context.fillStyle = '#202020';
@@ -59,8 +60,8 @@ function drawCharacter(char){
 
 }
 
-function Character(){
-	this.id = 0;
+function Character(id){
+	this.id = id;
 	this.pos = {
 		x: 0,
 		y: 0
