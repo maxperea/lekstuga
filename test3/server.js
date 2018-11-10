@@ -22,15 +22,15 @@ function newConnection(socket){
 		console.log(data);
 		data.id = socket.id;
 		socket.broadcast.emit('charData', data);
-	};
+	}
 
 	function requestPos(data){
 		socket.broadcast.emit('reqPos', data);
-	};
+	}
 
 	socket.on('disconnect', function(){
 		socket.broadcast.emit('dc');
-		console.log('player discconect')
+		console.log('player discconect');
 	});
 
 
