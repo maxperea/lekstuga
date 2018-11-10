@@ -6,6 +6,7 @@ context.scale(8,8);
 var socket;
 socket = io.connect('http://localhost:3000');
 
+//this is a comment
 var localPlayer = new Character(4);
 var players = [];
 players.push(localPlayer);
