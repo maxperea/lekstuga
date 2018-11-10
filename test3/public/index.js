@@ -60,13 +60,15 @@ function drawCharacter(char){
 
 }
 
-function Character(id){
-	this.id = id;
-	this.pos = {
-		x: 0,
-		y: 0
-	};
-	this.color = "red";
+class Character {
+	constructor(id) {
+		this.id = id;
+		this.pos = {
+			x: 0,
+			y: 0
+		};
+		this.color = "red";
+	}
 }
 
 document.addEventListener('keydown', event => {
