@@ -1,16 +1,20 @@
-var Student = function(name){
-	this.name = name;
-	this.sayHello = function(){
-		console.log("Hej jag heter " + this.name)
-	};
+class Student {
+	constructor(name) {
+		this.name = name;
+		this.sayHello = function () {
+			console.log("Hej jag heter " + this.name);
+		}
+	}
 }
 
-var UppsalaStudent = function(name, nation){
-	Student.call(this, name);
-	this.nation = nation;
-	this.rapport = function(){
-		console.log("Hej min nation är " + this.nation)
-	};
+class UppsalaStudent {
+	constructor(name, nation) {
+		Student.call(this, name);
+		this.nation = nation;
+		this.rapport = function () {
+			console.log("Hej min nation är " + this.nation);
+		}
+	}
 }
 
 
