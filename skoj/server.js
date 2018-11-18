@@ -40,19 +40,41 @@ let state = {
     world: world
 }
 
-
+/*
 world.box1 = {
-    left: 200,
-    up: 520,
-    right: 250,
-    down:570
+    left: 0,
+    up: 550,
+    right: 450,
+    down:600
 }
 
 world.box2 = {
-    left: 400,
-    up: 540,
-    right: 450,
+    left: 550,
+    up: 550,
+    right: 800,
     down:600
+}
+*/
+
+let counter = 0
+let speed = -0.2
+
+let makeRow = () => {
+    x = Math.floor(Math.random()*700)
+    world[counter] = {
+        left: 0,
+        up: 600,
+        right: x,
+        down: 650
+    }
+    counter++
+    world[counter] = {
+        left: x + 100,
+        up: 600,
+        right: 800,
+        down: 650
+    }
+    counter++
 }
 
 
@@ -65,21 +87,29 @@ io.on('connection', socket => {
             yspeed: 0,
             xspeed: 0,
             radius: 10,
-            onground: true
+            onground: false,
+            score: 0,
+            lost: false
         }
+        console.log(state.players[socket.id].score)
     })
     socket.on('movement', data => {
         let player = players[socket.id] || {};
         movement.movePlayer(player, data, 5, bounds)
+        socket.emit('score', player.score)
     })
     socket.on('disconnect', function() {
         delete players[socket.id]
     });
 })
 
+
+let trigger = 0
+
 setInterval(() => {
     for (var i in players) {
         let player = players[i]
+        movement.checkLoss(player, bounds)
         movement.forces(player)
         movement.confine(player, bounds)
         for (var id in world) {
@@ -87,5 +117,23 @@ setInterval(() => {
             movement.collisionWThing(player, item)
         }
     }
+    for (var id in world) {
+        let item = world[id]
+        movement.moveItemUp(speed, item)
+    }
+
+    trigger += -speed
+    if (trigger > 100) {
+        trigger = 0
+        makeRow()
+        //speed -= 0.05
+        for (var id in players) {
+            let player = players[id]
+            if(!player.lost) {
+                player.score -= 100 * speed
+            }
+        }
+    }
+
     io.sockets.emit('state', state)
 }, refreshRate)

@@ -48,6 +48,7 @@ socket.emit('new player')
 
 setInterval( ()=> {
     socket.emit('movement', movement)
+    socket.emit('score', 0)
 }, 1000 / 60)
 
 let canvas = document.getElementById('canvas')
@@ -55,19 +56,26 @@ canvas.width = 800
 canvas.height = 600
 var context = canvas.getContext('2d')
 socket.on('state', state => {
-    context.clearRect(0, 0, 800, 600)
-    context.fillStyle = 'green'
+    context.fillStyle = 'black'
+    context.fillRect(0, 0, 800, 600)
+    context.fillStyle = 'yellow'
     for(let id in state.players) {
         let player = state.players[id]
-        context.beginPath();
-        context.arc(player.x, player.y, 10, 0, 2 * Math.PI)
-        context.fill()
+        if (!player.lost) {
+            context.beginPath();
+            context.arc(player.x, player.y, 10, 0, 2 * Math.PI)
+            context.fill()
+        }
     }
-    for(let id in state.world) {
+    for (let id in state.world) {
         let item = state.world[id]
-        context.fillStyle = 'blue'
+        context.fillStyle = 'purple'
         context.beginPath();
         context.rect(item.left, item.up, item.right - item.left, item.down - item.up)
         context.fill()
     }
+})
+
+socket.on('score', score => {
+    document.getElementById('score').innerText = score;
 })

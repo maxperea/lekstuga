@@ -31,6 +31,16 @@ exports.confine = (player, bounds) => {
     } 
 }
 
+exports.checkLoss = (player, bounds) => {
+    if(isAbove(player, bounds))
+    player.lost = true
+}
+
+exports.moveItemUp = (y, bounds) => {
+    bounds.up += y
+    bounds.down += y
+}
+
 exports.collisionWThing = (player, bounds) => {
     if(isRightOf(player, bounds) &&
         !isAbove(player, bounds) &&
